@@ -15,6 +15,6 @@ class LoginRepositoryImpl implements LoginRepository {
       email: entity.email,
       password:entity.password
     );
-    await remoteDataSource.loginRemoteUser(model,context);
+   return await remoteDataSource.loginRemoteUser(model,context);
   }
 }

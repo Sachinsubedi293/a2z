@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:a2zjewelry/core/utils/env_components.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginRemote {
   final Dio dio;
@@ -18,7 +19,6 @@ class LoginRemote {
       );
 
       if (response.statusCode == 200 && response.data['error_code'] == 0) {
-        EnvComponents.showSuccessDialog(context, response.data['message']);
         print('Login successful: ${response.data}');
 
         LoginResModel loginResModel =
@@ -26,6 +26,10 @@ class LoginRemote {
 
         var box = await Hive.openBox<LoginResModel>('loginBox');
         await box.put('tokens', loginResModel);
+        if (await EnvComponents.showSuccessDialog(
+            context, response.data['message'])) {
+          context.go('/home');
+        }
       } else {
         print('Login failed: ${response.data}');
         EnvComponents.showErrorDialog(context, response.data['message']);
@@ -38,6 +42,5 @@ class LoginRemote {
       print('Error: $e');
       EnvComponents.showErrorDialog(context, e.toString());
     }
-    return null;
   }
 }

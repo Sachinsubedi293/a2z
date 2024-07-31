@@ -46,7 +46,7 @@ class EnvComponents {
     return true;
   }
 
-  static bool showSuccessDialog(BuildContext context, dynamic message) {
+  static Future<bool> showSuccessDialog(BuildContext context, dynamic message) async {
     String successMessage = 'Operation successful.';
     String description = '';
 
@@ -61,7 +61,7 @@ class EnvComponents {
       successMessage = message;
     }
 
-    showDialog(
+    return showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -81,13 +81,12 @@ class EnvComponents {
             TextButton(
               child: const Text("OK"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(true);
               },
             ),
           ],
         );
       },
-    );
-    return true;
+    ).then((result) => result ?? false);
   }
 }
