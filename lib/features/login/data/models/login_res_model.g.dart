@@ -17,8 +17,8 @@ class LoginResModelAdapter extends TypeAdapter<LoginResModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return LoginResModel(
-      accessToken: fields[0] as String,
-      refreshToken: fields[1] as String,
+      accessToken: fields[0] as String?,
+      refreshToken: fields[1] as String?,
     );
   }
 

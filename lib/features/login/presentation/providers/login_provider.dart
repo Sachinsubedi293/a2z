@@ -6,6 +6,7 @@ import 'package:a2zjewelry/features/login/domain/usecases/login_usecase.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginState {
   final bool loading;
@@ -26,11 +27,13 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   LoginNotifier(this.loginUserUseCase) : super(LoginState());
 
-  Future<void> loginUser(LoginEntity entity,BuildContext context) async {
+  Future<void> loginUser(LoginEntity entity, BuildContext context) async {
     try {
       state = state.copyWith(loading: true);
-      await loginUserUseCase.call(entity,context);
+      await loginUserUseCase.call(entity, context);
       state = state.copyWith(loading: false, error: null);
+      context.go('/home');
+      
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
     }

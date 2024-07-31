@@ -1,9 +1,9 @@
-import 'package:a2zjewelry/features/login/domain/entities/login_entity.dart';
-import 'package:a2zjewelry/features/login/presentation/providers/login_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:a2zjewelry/features/register/presentation/widgets/loading_widget.dart';
+import 'package:a2zjewelry/features/login/domain/entities/login_entity.dart';
+import 'package:a2zjewelry/features/login/presentation/providers/login_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:a2zjewelry/features/register/presentation/widgets/loading_widget.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   @override
@@ -14,6 +14,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _rememberMe = false;
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -27,120 +29,205 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final loginNotifier = ref.read(loginProvider.notifier);
 
     return Scaffold(
-
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blueAccent, Colors.lightBlueAccent],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+      extendBodyBehindAppBar: true,
+      body: Center(
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: 30,),
+                      Image.asset('lib/assets/welcome1.png'),
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Welcome back',
+                        style: TextStyle(
+                            fontSize: 24.0, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10.0),
+                      Text('Sign in to access your account'),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          hintText: 'Enter your email',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Please enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock),
+                          hintText: 'Password',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          if (value.length < 6) {
+                            return 'Password must be at least 6 characters';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _rememberMe,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    _rememberMe = value ?? false;
+                                  });
+                                },
+                              ),
+                              Text('Remember me'),
+                            ],
+                          ),
+                          InkWell(
+                            onTap: () {
+                              context.go('/forgot');
+                            },
+                            child: Text(
+                              'Forgot password?',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.0),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              final entity = LoginEntity(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              );
+                              await loginNotifier.loginUser(entity, context);
+                            }
+                          },
+                          child: Text('Log In', style: TextStyle(fontSize: 16.0)),
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('New Here? '),
+                          InkWell(
+                            onTap: () {
+                              context.go('/register');
+                            },
+                            child: Text(
+                              'Register now',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(children: <Widget>[
+                        Expanded(child: Divider()),
+                        Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            "OR",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                        Expanded(child: Divider()),
+                      ]),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          ElevatedButton.icon(
+                            
+                            onPressed: () {
+                              // Add your Google sign-in logic here
+                            },
+                            icon: Image.asset(
+                              'lib/assets/google.png',
+                              height: 24.0,
+                              width: 24.0,
+                            ),
+                            label: Text('Sign in with Google'),
+                            style: ElevatedButton.styleFrom(
+                              
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              padding: EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
+                              textStyle: TextStyle(fontSize: 16.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(color: Colors.grey),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+                           ElevatedButton.icon(
+                            
+                            onPressed: () {
+                              // Add your facebook sign-in logic here
+                            },
+                            icon: Image.asset(
+                              'lib/assets/facebook.png',
+                              height: 24.0,
+                              width: 24.0,
+                            ),
+                            label: Text('Sign in with Facebook'),
+                            style: ElevatedButton.styleFrom(
+                              
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              padding: EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
+                              textStyle: TextStyle(fontSize: 16.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                side: BorderSide(color: Colors.grey),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                children: [
-                  SizedBox(height: 20),
-                  Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 40),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.white),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.1),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                        return 'Please enter a valid email';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 20),
-
-                   TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.white),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.1),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
-                      }
-                      return null;
-                    },
-                  ),
-                
-                  SizedBox(height: 20),
-                  TextButton(onPressed: (){context.go('/login/forgot');}, child: Text('Forgot Password')),
-                  SizedBox(height: 40,),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        final entity = LoginEntity(
-                          email: _emailController.text,
-                          password:_passwordController.text
-                        );
-                        await loginNotifier.loginUser(entity, context);
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 10, 142, 251),
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
+            if (state.loading)
+              Positioned.fill(
+                child: Container(
+                  color: Colors.black54,
+                  child: Center(child: LoadingWidget()),
+                ),
               ),
-            ),
-          ),
-          if (state.loading) LoadingWidget(),
-        ],
+          ],
+        ),
       ),
     );
   }

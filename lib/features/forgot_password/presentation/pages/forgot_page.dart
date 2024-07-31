@@ -1,8 +1,9 @@
-import 'package:a2zjewelry/features/forgot_password/domain/entities/forgot_entity.dart';
-import 'package:a2zjewelry/features/forgot_password/presentation/providers/forgot_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:a2zjewelry/features/forgot_password/domain/entities/forgot_entity.dart';
+import 'package:a2zjewelry/features/forgot_password/presentation/providers/forgot_provider.dart';
 import 'package:a2zjewelry/features/register/presentation/widgets/loading_widget.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotPage extends ConsumerStatefulWidget {
   @override
@@ -26,87 +27,80 @@ class _ForgotPageState extends ConsumerState<ForgotPage> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
- appBar: AppBar(
-  backgroundColor: Colors.transparent,
- ),
       body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blueAccent, Colors.lightBlueAccent],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-          ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Form(
               key: _formKey,
               child: ListView(
                 children: [
-                  SizedBox(height: 20),
+                  SizedBox(height: 30.0),
+                  Image.asset(
+                      'lib/assets/welcome1.png'), // Ensure this image is in your assets folder
+                  SizedBox(height: 20.0),
                   Text(
                     'Forgot Password',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 24.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height: 10.0),
+                  Text(
+                    'Enter your email to reset your password.',
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 20.0),
                   TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.white),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.1),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide.none,
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          hintText: 'Enter your email',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                            return 'Please enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                  SizedBox(height: 20.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          final entity = ForgotEntity(
+                            email: _emailController.text,
+                          );
+                          await forgotNotifier.forgotUser(entity, context);
+                        }
+                      },
+                      
+                      child: Text(
+                        'Send Reset Link',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
                       ),
                     ),
-                    style: TextStyle(color: Colors.white),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                        return 'Please enter a valid email';
-                      }
-                      return null;
-                    },
                   ),
-                  SizedBox(height: 20),
-                 
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        final entity = ForgotEntity(
-                          email: _emailController.text,
-                        );
-                        await forgotNotifier.forgotUser(entity, context);
-                      }
+                  SizedBox(height: 30.0),
+                  Row(mainAxisAlignment: MainAxisAlignment.center,children: [InkWell(
+                    onTap: () {
+                      context.go('/login'); 
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 10, 142, 251),
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
                     child: Text(
-                      'Forgot Password',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      '<-- Back to Login',
+                      style: TextStyle(color: Colors.red),
                     ),
-                  ),
+                  ),],)
                 ],
               ),
             ),
