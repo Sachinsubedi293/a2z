@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+
+const baseUrl = "https://tech33.pythonanywhere.com/";
+
+class EnvComponents {
+  static bool isValidEmail(String email) {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
+  static bool showErrorDialog(BuildContext context, dynamic error) {
+    String errorMessage = 'An error occurred.';
+
+    if (error is Map<String, dynamic>) {
+      if (error.containsKey('message') && error.containsKey('errors')) {
+        errorMessage = error['message'];
+        List<dynamic> errors = error['errors'];
+        for (var errorDetail in errors) {
+          errorDetail.forEach((key, value) {
+            errorMessage += '\n${key.toString()}: ${value.join(', ')}';
+          });
+        }
+      } else {
+        errorMessage = error.toString();
+      }
+    } else if (error is String) {
+      errorMessage = error;
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+    return true;
+  }
+
+  static bool showSuccessDialog(BuildContext context, dynamic message) {
+    String successMessage = 'Operation successful.';
+    String description = '';
+
+    if (message is Map<String, dynamic>) {
+      if (message.containsKey('message')) {
+        successMessage = message['message'];
+      }
+      if (message.containsKey('description')) {
+        description = message['description'];
+      }
+    } else if (message is String) {
+      successMessage = message;
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Success"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(successMessage),
+              if (description.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                Text(description),
+              ],
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+    return true;
+  }
+}
