@@ -2,6 +2,13 @@
 
 A new Flutter project.
 
+
+
+## Completed
+    - Register
+    - Forgot Password
+    - Login(outh is remaining)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
