@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:a2zjewelry/features/profile/data/models/profile_model.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ProfileRemote {
   final Dio dio;
@@ -25,9 +26,30 @@ class ProfileRemote {
 
       final formData = FormData.fromMap(formDataMap);
       final loginResModel = await localDataSource.getLoginResModel();
-      
+      final token = loginResModel?.accessToken;
+
+      String? userId;
+
+      if (token != null) {
+        // Decode the token
+        final decodedToken = JwtDecoder.decode(token);
+
+        // Print the decoded token
+        userId = decodedToken['user_id']?.toString();
+
+        if (userId == null) {
+          print('No user ID found in token');
+          return;
+        }
+      } else {
+        print('No token found');
+        return;
+      }
+
+      print('UserId: $userId');
+
       final response = await dio.patch(
-        '/api/v1/users/profiles/28/',
+        '/api/v1/users/profiles/$userId/',
         data: formData,
         options: Options(
           headers: {
@@ -49,7 +71,6 @@ class ProfileRemote {
   Future<bool> fetchUserProfile() async {
     try {
       final loginResModel = await localDataSource.getLoginResModel();
-
       final response = await dio.get(
         '/api/v1/users/profile/',
         options: Options(
@@ -67,7 +88,7 @@ class ProfileRemote {
         // Parse the profile data from response
         ProfileResModel profileResModel =
             ProfileResModel.fromJson(response.data['data']);
-        
+
         // Save to local storage
         await localDataSource.saveProfile(profileResModel);
 
