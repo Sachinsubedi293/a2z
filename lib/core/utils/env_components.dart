@@ -7,86 +7,88 @@ class EnvComponents {
     return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }
 
-  static bool showErrorDialog(BuildContext context, dynamic error) {
-    String errorMessage = 'An error occurred.';
+  static Future<void> showErrorDialog(BuildContext context, dynamic error) async {
+  if (!context.mounted) return;
 
-    if (error is Map<String, dynamic>) {
-      if (error.containsKey('message') && error.containsKey('errors')) {
-        errorMessage = error['message'];
-        List<dynamic> errors = error['errors'];
-        for (var errorDetail in errors) {
-          errorDetail.forEach((key, value) {
-            errorMessage += '\n${key.toString()}: ${value.join(', ')}';
-          });
-        }
-      } else {
-        errorMessage = error.toString();
+  String errorMessage = 'An error occurred.';
+  if (error is Map<String, dynamic>) {
+    if (error.containsKey('message') && error.containsKey('errors')) {
+      errorMessage = error['message'];
+      List<dynamic> errors = error['errors'];
+      for (var errorDetail in errors) {
+        errorDetail.forEach((key, value) {
+          errorMessage += '\n${key.toString()}: ${value.join(', ')}';
+        });
       }
-    } else if (error is String) {
-      errorMessage = error;
+    } else {
+      errorMessage = error.toString();
     }
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Error"),
-          content: Text(errorMessage),
-          actions: <Widget>[
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-    return true;
+  } else if (error is String) {
+    errorMessage = error;
   }
 
-  static Future<bool> showSuccessDialog(BuildContext context, dynamic message) async {
-    String successMessage = 'Operation successful.';
-    String description = '';
-
-    if (message is Map<String, dynamic>) {
-      if (message.containsKey('message')) {
-        successMessage = message['message'];
-      }
-      if (message.containsKey('description')) {
-        description = message['description'];
-      }
-    } else if (message is String) {
-      successMessage = message;
-    }
-
-    return showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Success"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(successMessage),
-              if (description.isNotEmpty) ...[
-                const SizedBox(height: 10),
-                Text(description),
-              ],
-            ],
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Error"),
+        content: Text(errorMessage),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-          ],
-        );
-      },
-    ).then((result) => result ?? false);
+        ],
+      );
+    },
+  );
+}
+
+static Future<bool> showSuccessDialog(BuildContext context, dynamic message) async {
+  if (!context.mounted) return false;
+
+  String successMessage = 'Operation successful.';
+  String description = '';
+
+  if (message is Map<String, dynamic>) {
+    if (message.containsKey('message')) {
+      successMessage = message['message'];
+    }
+    if (message.containsKey('description')) {
+      description = message['description'];
+    }
+  } else if (message is String) {
+    successMessage = message;
   }
+
+  return await showDialog<bool>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Success"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(successMessage),
+            if (description.isNotEmpty) ...[
+              const SizedBox(height: 10),
+              Text(description),
+            ],
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+          ),
+        ],
+      );
+    },
+  ).then((result) => result ?? false);
+}
 }

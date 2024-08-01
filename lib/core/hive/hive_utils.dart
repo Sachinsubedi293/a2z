@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
 class HiveUtils<T> {
@@ -9,12 +10,12 @@ class HiveUtils<T> {
 
   Future<void> openBox() async {
     try {
-      if (_box == null) {
-        _box = await Hive.openBox<T>(boxName);
-      }
+      _box ??= await Hive.openBox<T>(boxName);
     } catch (e) {
       // Handle any exceptions that might occur during box opening
-      print('Error opening box: $e');
+      if (kDebugMode) {
+        print('Error opening box: $e');
+      }
     }
   }
 
@@ -26,7 +27,9 @@ class HiveUtils<T> {
       }
     } catch (e) {
       // Handle any exceptions that might occur during box closing
-      print('Error closing box: $e');
+      if (kDebugMode) {
+        print('Error closing box: $e');
+      }
     }
   }
 
@@ -36,7 +39,9 @@ class HiveUtils<T> {
       return _box!.containsKey(key);
     } catch (e) {
       // Handle any exceptions that might occur
-      print('Error checking if data is stored: $e');
+      if (kDebugMode) {
+        print('Error checking if data is stored: $e');
+      }
       return false;
     }
   }
@@ -50,7 +55,9 @@ class HiveUtils<T> {
       return null;
     } catch (e) {
       // Handle any exceptions that might occur
-      print('Error retrieving data: $e');
+      if (kDebugMode) {
+        print('Error retrieving data: $e');
+      }
       return null;
     }
   }
@@ -61,7 +68,9 @@ class HiveUtils<T> {
       await _box!.put(key, data);
     } catch (e) {
       // Handle any exceptions that might occur
-      print('Error storing data: $e');
+      if (kDebugMode) {
+        print('Error storing data: $e');
+      }
     }
   }
 
@@ -71,7 +80,9 @@ class HiveUtils<T> {
       await _box!.delete(key);
     } catch (e) {
       // Handle any exceptions that might occur
-      print('Error deleting data: $e');
+      if (kDebugMode) {
+        print('Error deleting data: $e');
+      }
     }
   }
 }

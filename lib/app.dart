@@ -2,32 +2,40 @@ import 'package:a2zjewelry/router/app_router.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'a2zjewelry',
       theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.red,
+          dynamicSchemeVariant: DynamicSchemeVariant.vibrant,
+          brightness: Brightness.light,
+        ),
+
+        indicatorColor: Colors.red,
         inputDecorationTheme: InputDecorationTheme(
           prefixIconColor: Colors.red,
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: const TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(color: Colors.red),
+            borderSide: const BorderSide(color: Colors.red),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: const BorderSide(color: Colors.grey),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
@@ -47,9 +55,9 @@ class MyApp extends StatelessWidget {
           side: WidgetStateBorderSide.resolveWith(
             (states) {
               if (!states.contains(WidgetState.selected)) {
-                return BorderSide(color: Colors.brown);
+                return const BorderSide(color: Colors.brown);
               }
-              return BorderSide(color: Colors.red);
+              return const BorderSide(color: Colors.red);
             },
           ),
           checkColor: WidgetStateProperty.resolveWith<Color>(
@@ -69,9 +77,8 @@ class MyApp extends StatelessWidget {
             },
           ),
         ),
-        
       ),
-      routerConfig: AppRouter.router,
+      routerConfig: AppRouter().router,
     );
   }
 }

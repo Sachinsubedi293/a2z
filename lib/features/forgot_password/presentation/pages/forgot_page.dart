@@ -6,6 +6,8 @@ import 'package:a2zjewelry/features/register/presentation/widgets/loading_widget
 import 'package:go_router/go_router.dart';
 
 class ForgotPage extends ConsumerStatefulWidget {
+  const ForgotPage({super.key});
+
   @override
   _ForgotPageState createState() => _ForgotPageState();
 }
@@ -35,11 +37,11 @@ class _ForgotPageState extends ConsumerState<ForgotPage> {
               key: _formKey,
               child: ListView(
                 children: [
-                  SizedBox(height: 30.0),
+                  const SizedBox(height: 30.0),
                   Image.asset(
                       'lib/assets/welcome1.png'), // Ensure this image is in your assets folder
-                  SizedBox(height: 20.0),
-                  Text(
+                  const SizedBox(height: 20.0),
+                  const Text(
                     'Forgot Password',
                     style: TextStyle(
                       fontSize: 24.0,
@@ -47,15 +49,15 @@ class _ForgotPageState extends ConsumerState<ForgotPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 10.0),
-                  Text(
+                  const SizedBox(height: 10.0),
+                  const Text(
                     'Enter your email to reset your password.',
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   TextFormField(
                         controller: _emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.email),
                           hintText: 'Enter your email',
                         ),
@@ -69,7 +71,7 @@ class _ForgotPageState extends ConsumerState<ForgotPage> {
                           return null;
                         },
                       ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -82,7 +84,7 @@ class _ForgotPageState extends ConsumerState<ForgotPage> {
                         }
                       },
                       
-                      child: Text(
+                      child: const Text(
                         'Send Reset Link',
                         style: TextStyle(
                           color: Colors.white,
@@ -91,12 +93,12 @@ class _ForgotPageState extends ConsumerState<ForgotPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30.0),
+                  const SizedBox(height: 30.0),
                   Row(mainAxisAlignment: MainAxisAlignment.center,children: [InkWell(
                     onTap: () {
                       context.go('/login'); 
                     },
-                    child: Text(
+                    child: const Text(
                       '<-- Back to Login',
                       style: TextStyle(color: Colors.red),
                     ),
@@ -105,7 +107,7 @@ class _ForgotPageState extends ConsumerState<ForgotPage> {
               ),
             ),
           ),
-          if (state.loading) LoadingWidget(),
+          if (state.loading) const LoadingWidget(),
         ],
       ),
     );

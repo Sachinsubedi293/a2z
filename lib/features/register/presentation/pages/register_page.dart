@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterPage extends ConsumerStatefulWidget {
+  const RegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -42,25 +44,25 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(height: 60.0),
+                    const SizedBox(height: 60.0),
                     Image.asset(
                         'lib/assets/welcome1.png'), // Ensure this image is in your assets folder
-                    SizedBox(height: 20.0),
-                    Text(
+                    const SizedBox(height: 20.0),
+                    const Text(
                       'Get Started',
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 10.0),
-                    Text('by creating a free account.'),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 10.0),
+                    const Text('by creating a free account.'),
+                    const SizedBox(height: 20.0),
                     Form(
                       key: _formKey,
                       child: Column(
                         children: [
                           TextFormField(
                             controller: _emailController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.email),
                               hintText: 'Valid email',
                             ),
@@ -75,11 +77,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               return null;
                             },
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           TextFormField(
                             controller: _passwordController,
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.lock),
                               hintText: 'Strong Password',
                             ),
@@ -93,11 +95,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               return null;
                             },
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           TextFormField(
                             controller: _confirmPasswordController,
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.lock),
                               hintText: 'Confirm Password',
                             ),
@@ -108,7 +110,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               return null;
                             },
                           ),
-                          SizedBox(height: 10.0),
+                          const SizedBox(height: 10.0),
                           Row(
                             children: [
                               Checkbox(
@@ -119,14 +121,15 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                   });
                                 },
                               ),
-                              Expanded(
+                              const Expanded(
                                 child:
                                     Text('Allow to receive promotional emails'),
                               ),
                             ],
                           ),
-                          SizedBox(height: 10.0),
+                          const SizedBox(height: 10.0),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Checkbox(
                                 value: _acceptTerms,
@@ -136,21 +139,37 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                   });
                                 },
                               ),
-                              Row(
-                                children: [
-                                  Text('I accept the '),
-                                  InkWell(
-                                    onTap: () {},
-                                    child: Text(
-                                      'Terms and Conditions.',
-                                      style: TextStyle(color: Colors.red),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text('I accept the '),
+                                        Expanded(
+                                          child: InkWell(
+                                            onTap: () {
+                                              // Handle the tap event for terms and conditions
+                                            },
+                                            child: Text(
+                                              'Terms and Conditions.',
+                                              style: const TextStyle(
+                                                  color: Colors.red),
+                                              maxLines:
+                                                  null, // Allow unlimited lines
+                                              overflow: TextOverflow
+                                                  .visible, // Show overflow text
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              )
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -159,7 +178,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                     false) {
                                   if (!_acceptTerms) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
+                                      const SnackBar(
                                           content: Text(
                                               'You must accept the terms and conditions')),
                                     );
@@ -176,27 +195,26 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
-                                padding: EdgeInsets.symmetric(vertical: 16),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),
-                              child: Text(
-                                'Sign Up',
-                               style: TextStyle(fontSize: 16.0)
-                              ),
+                              child: const Text('Sign Up',
+                                  style: TextStyle(fontSize: 16.0)),
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Already a member? '),
+                              const Text('Already a member? '),
                               InkWell(
                                 onTap: () {
                                   context.go('/login');
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Log In',
                                   style: TextStyle(color: Colors.red),
                                 ),
@@ -211,7 +229,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
               ),
             ),
           ),
-          if (state.loading) LoadingWidget(),
+          if (state.loading) const LoadingWidget(),
         ],
       ),
     );

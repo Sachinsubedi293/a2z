@@ -43,6 +43,8 @@ dependencies:
   hive_flutter: ^1.1.0
   jwt_decoder: ^2.0.1
   oauth2: ^2.0.2
+  image_picker: ^1.1.2
+  fluttertoast: ^8.2.5
 
 dev_dependencies:
   flutter_test:

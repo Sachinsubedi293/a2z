@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:a2zjewelry/features/register/presentation/widgets/loading_widget.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -14,7 +16,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -41,20 +42,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: 30,),
+                      const SizedBox(height: 30,),
                       Image.asset('lib/assets/welcome1.png'),
-                      SizedBox(height: 20.0),
-                      Text(
+                      const SizedBox(height: 20.0),
+                      const Text(
                         'Welcome back',
                         style: TextStyle(
                             fontSize: 24.0, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10.0),
-                      Text('Sign in to access your account'),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 10.0),
+                      const Text('Sign in to access your account'),
+                      const SizedBox(height: 20.0),
                       TextFormField(
                         controller: _emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.email),
                           hintText: 'Enter your email',
                         ),
@@ -68,11 +69,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.lock),
                           hintText: 'Password',
                         ),
@@ -86,35 +87,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: _rememberMe,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    _rememberMe = value ?? false;
-                                  });
-                                },
-                              ),
-                              Text('Remember me'),
-                            ],
-                          ),
+                          
                           InkWell(
                             onTap: () {
                               context.go('/forgot');
                             },
-                            child: Text(
+                            child: const Text(
                               'Forgot password?',
                               style: TextStyle(color: Colors.red),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
@@ -127,29 +116,29 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               await loginNotifier.loginUser(entity, context);
                             }
                           },
-                          child: Text('Log In', style: TextStyle(fontSize: 16.0)),
+                          child: const Text('Log In', style: TextStyle(fontSize: 16.0)),
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('New Here? '),
+                          const Text('New Here? '),
                           InkWell(
                             onTap: () {
                               context.go('/register');
                             },
-                            child: Text(
+                            child: const Text(
                               'Register now',
                               style: TextStyle(color: Colors.red),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      Row(children: <Widget>[
+                      const Row(children: <Widget>[
                         Expanded(child: Divider()),
                         Padding(
                           padding: EdgeInsets.all(8),
@@ -160,7 +149,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
                         Expanded(child: Divider()),
                       ]),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Column(
@@ -175,20 +164,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               height: 24.0,
                               width: 24.0,
                             ),
-                            label: Text('Sign in with Google'),
+                            label: const Text('Sign in with Google'),
                             style: ElevatedButton.styleFrom(
                               
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.black,
-                              padding: EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
-                              textStyle: TextStyle(fontSize: 16.0),
+                              padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
+                              textStyle: const TextStyle(fontSize: 16.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
-                                side: BorderSide(color: Colors.grey),
+                                side: const BorderSide(color: Colors.grey),
                               ),
                             ),
                           ),
-                          SizedBox(height: 20,),
+                          const SizedBox(height: 20,),
                            ElevatedButton.icon(
                             
                             onPressed: () {
@@ -199,16 +188,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               height: 24.0,
                               width: 24.0,
                             ),
-                            label: Text('Sign in with Facebook'),
+                            label: const Text('Sign in with Facebook'),
                             style: ElevatedButton.styleFrom(
                               
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.black,
-                              padding: EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
-                              textStyle: TextStyle(fontSize: 16.0),
+                              padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
+                              textStyle: const TextStyle(fontSize: 16.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
-                                side: BorderSide(color: Colors.grey),
+                                side: const BorderSide(color: Colors.grey),
                               ),
                             ),
                           ),
@@ -223,7 +212,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               Positioned.fill(
                 child: Container(
                   color: Colors.black54,
-                  child: Center(child: LoadingWidget()),
+                  child: const Center(child: LoadingWidget()),
                 ),
               ),
           ],

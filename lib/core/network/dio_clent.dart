@@ -14,6 +14,7 @@ class DioClient {
       baseUrl: 'https://tech33.pythonanywhere.com',
       headers: {
         'Content-Type': 'application/json',
+        'accept': 'application/json'
       },
     ));
   }
