@@ -9,16 +9,20 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class AppRouter {
+  
   static final GoRouter router = GoRouter(
+    
     initialLocation: '/login',
     redirect: (context, state) {
       final box = Hive.box<LoginResModel>('loginBox');
       final token = box.get('tokens');
 
-      if (token == null || token.accessToken == null) {
+      if (state.matchedLocation=='/login') {
+        if (token == null || token.accessToken == null) {
         return '/login';
       }
       return '/home';
+      }
     },
     routes: [
       GoRoute(
