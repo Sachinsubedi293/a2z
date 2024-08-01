@@ -7,6 +7,7 @@ import 'package:a2zjewelry/features/login/data/models/login_res_model.dart';
 Future<void> initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(LoginResModelAdapter()); 
+await Hive.openBox<LoginResModel>('loginBox');
 }
 
 void main() async {
