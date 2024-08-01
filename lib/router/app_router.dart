@@ -23,6 +23,7 @@ class AppRouter {
       }
       return '/home';
       }
+      return null;
     },
     routes: [
       GoRoute(
