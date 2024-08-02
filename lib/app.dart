@@ -12,21 +12,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.red,
+          seedColor: Colors.deepOrange,
           dynamicSchemeVariant: DynamicSchemeVariant.vibrant,
           brightness: Brightness.light,
         ),
 
-        indicatorColor: Colors.red,
+        indicatorColor: Colors.deepOrange,
         inputDecorationTheme: InputDecorationTheme(
-          prefixIconColor: Colors.red,
+          prefixIconColor: Colors.deepOrange,
           hintStyle: const TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
-            borderSide: const BorderSide(color: Colors.red),
+            borderSide: const BorderSide(color: Colors.deepOrange),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.0),
             ),
             foregroundColor: Colors.white,
-            backgroundColor: Colors.red,
+            backgroundColor: Colors.deepOrange,
           ),
         ),
         textButtonTheme: TextButtonThemeData(
@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
               if (!states.contains(WidgetState.selected)) {
                 return const BorderSide(color: Colors.brown);
               }
-              return const BorderSide(color: Colors.red);
+              return const BorderSide(color: Colors.deepOrange);
             },
           ),
           checkColor: WidgetStateProperty.resolveWith<Color>(
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
           fillColor: WidgetStateProperty.resolveWith<Color>(
             (states) {
               if (states.contains(WidgetState.selected)) {
-                return Colors.red;
+                return Colors.deepOrange;
               }
               return Colors.transparent;
             },

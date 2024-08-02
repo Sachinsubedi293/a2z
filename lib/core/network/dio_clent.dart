@@ -16,6 +16,9 @@ class DioClient {
         'Content-Type': 'application/json',
         'accept': 'application/json'
       },
+      sendTimeout: Duration(seconds: 10),
+      receiveTimeout: Duration(seconds: 10),
+      connectTimeout: Duration(seconds: 10),
     ));
   }
 }
