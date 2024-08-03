@@ -77,6 +77,20 @@ class MyApp extends StatelessWidget {
             },
           ),
         ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Colors.deepOrange,
+          backgroundColor: Colors.white,
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.deepOrange,
+        ),
+        cardTheme: CardTheme(
+          elevation: 2,
+          surfaceTintColor: Colors.deepOrange[100],
+        ),
+        
+
       ),
       routerConfig: AppRouter().router,
     );

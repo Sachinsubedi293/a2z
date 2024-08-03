@@ -45,6 +45,9 @@ dependencies:
   oauth2: ^2.0.2
   image_picker: ^1.1.2
   fluttertoast: ^8.2.5
+  shimmer: ^3.0.0
+  cached_network_image: ^3.4.0
+  badges: ^3.1.2
 
 dev_dependencies:
   flutter_test:

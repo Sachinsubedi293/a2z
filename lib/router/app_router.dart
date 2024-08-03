@@ -1,6 +1,7 @@
 import 'package:a2zjewelry/core/temp/pages/temp_page.dart';
+import 'package:a2zjewelry/features/404page/presentation/pages/404page.dart';
 import 'package:a2zjewelry/features/forgot_password/presentation/pages/forgot_page.dart';
-import 'package:a2zjewelry/features/homepage/presentation/pages/home_page.dart';
+import 'package:a2zjewelry/features/mainpage/presentation/pages/main_page.dart';
 import 'package:a2zjewelry/features/login/data/models/login_res_model.dart';
 import 'package:a2zjewelry/features/login/presentation/pages/login_page.dart';
 import 'package:a2zjewelry/features/profile/presentation/pages/profile_Page.dart';
@@ -46,13 +47,16 @@ class AppRouter {
         path: '/forgot',
         builder: (context, state) => const ForgotPage(),
       ),
-      GoRoute(path: '/home', builder: (context, state) => const HomePage(), routes: [
+      GoRoute(path: '/home', builder: (context, state) => const MainPage(), routes: [
         GoRoute(
           path: 'profile',
           builder: (context, state) => const ProfilePage(),
         ),
       ]),
     ],
+    errorBuilder: (context, state) {
+      return PageNotFound();
+    }
   );
   
 }
