@@ -1,13 +1,13 @@
-import 'package:a2zjewelry/router/app_router.dart';
+import 'package:a2zjewelry/core/hive/hive_utils.dart';
+import 'package:a2zjewelry/features/mainpage/presentation/widgets/drop_down_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:a2zjewelry/features/mainpage/presentation/widgets/drop_down_menu.dart';
 
 class MainPage extends StatefulWidget {
   final Widget child;
 
-  const MainPage({required this.child, super.key});
+  const MainPage({required this.child, Key? key}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -15,9 +15,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-
   final int _notificationsCount = 3;
   final int _cartItemCount = 5;
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -26,19 +26,19 @@ class _MainPageState extends State<MainPage> {
 
     switch (index) {
       case 0:
-        NavigationService.goHome();
+        context.go('/start/home');
         break;
       case 1:
-        NavigationService.goToCategories();
+        context.go('/start/categories');
         break;
       case 2:
-        NavigationService.goToSearch();
+        context.go('/start/search');
         break;
       case 3:
-        NavigationService.goToCart();
+        context.go('/start/cart');
         break;
       case 4:
-        NavigationService.goToWishlist();
+        context.go('/start/wishlist');
         break;
     }
   }
@@ -66,10 +66,7 @@ class _MainPageState extends State<MainPage> {
               onPressed: () {},
             ),
           ),
-          UserAvatarMenu(
-            avatarUrl:
-                'https://example.com/avatar.jpg', // Replace with the actual URL
-          ),
+          UserAvatarMenu(avatarUrl: HiveService().profileBox.get('profile')!.avatar!),
         ],
       ),
       drawer: _buildDrawer(),
@@ -102,7 +99,7 @@ class _MainPageState extends State<MainPage> {
             label: 'Cart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
+                      icon: Icon(Icons.favorite),
             label: 'Wishlist',
           ),
         ],
@@ -190,14 +187,7 @@ class _MainPageState extends State<MainPage> {
               _onItemTapped(4);
             },
           ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile'),
-            onTap: () {
-              context.pop();
-             NavigationService.goToProfile();
-            },
-          ),
+         
         ],
       ),
     );

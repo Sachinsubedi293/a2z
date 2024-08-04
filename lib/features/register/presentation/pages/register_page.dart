@@ -1,9 +1,9 @@
 import 'package:a2zjewelry/features/register/domain/entities/register_entity.dart';
 import 'package:a2zjewelry/features/register/presentation/providers/register_provider.dart';
 import 'package:a2zjewelry/features/register/presentation/widgets/loading_widget.dart';
-import 'package:a2zjewelry/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({super.key});
@@ -216,7 +216,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               const Text('Already a member? '),
                               InkWell(
                                 onTap: () {
-                                  NavigationService.goLogin();
+                                 context.go('/login');
                                 },
                                 child: const Text(
                                   'Log In',

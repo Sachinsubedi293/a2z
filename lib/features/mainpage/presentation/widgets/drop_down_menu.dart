@@ -1,8 +1,10 @@
+import 'package:a2zjewelry/core/utils/env_components.dart';
 import 'package:a2zjewelry/features/profile/data/models/profile_res_model.dart';
-import 'package:a2zjewelry/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:a2zjewelry/features/login/data/models/login_res_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class UserAvatarMenu extends StatelessWidget {
   final String avatarUrl;
@@ -13,15 +15,22 @@ class UserAvatarMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
       icon: CircleAvatar(
-        backgroundImage: NetworkImage(avatarUrl),
+        radius: 24, 
+        backgroundColor: Colors.deepOrange,
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.deepOrange, 
+              width: 3, 
+            ),
+          ),
+          child: CircleAvatar(
+            backgroundImage: CachedNetworkImageProvider(baseUrl + avatarUrl),
+          ),
+        ),
       ),
-      onSelected: (value) {
-        if (value == 'Profile') {
-          NavigationService.goToProfile();
-        } else if (value == 'Logout') {
-          _showLogoutDialog(context);
-        }
-      },
+      offset: Offset(0, 50),
       itemBuilder: (BuildContext context) {
         return [
           PopupMenuItem<String>(
@@ -33,6 +42,13 @@ class UserAvatarMenu extends StatelessWidget {
             child: Text('Logout'),
           ),
         ];
+      },
+      onSelected: (value) {
+        if (value == 'Profile') {
+          context.go('/profile');
+        } else if (value == 'Logout') {
+          _showLogoutDialog(context);
+        }
       },
     );
   }
@@ -58,7 +74,7 @@ class UserAvatarMenu extends StatelessWidget {
                 await Hive.box<LoginResModel>('loginBox').clear();
                 await Hive.box<ProfileResModel>('profileBox').clear();
 
-                NavigationService.goLogin();
+                context.go('/login');
               },
             ),
           ],

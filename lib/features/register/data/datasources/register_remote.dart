@@ -1,9 +1,9 @@
-import 'package:a2zjewelry/router/app_router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:a2zjewelry/core/utils/env_components.dart';
 import 'package:a2zjewelry/features/register/data/models/register_model.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterRemoteDataSource {
   final Dio dio;
@@ -20,7 +20,7 @@ class RegisterRemoteDataSource {
       if (response.statusCode == 200) {
         if (context.mounted) {
         await EnvComponents.showSuccessDialog(context, response.data);
-        NavigationService.goLogin();
+       context.go('/login');
         }
         if (kDebugMode) {
           print('Registration successful: ${response.data}');

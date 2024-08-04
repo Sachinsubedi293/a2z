@@ -1,11 +1,11 @@
 import 'package:a2zjewelry/features/login/data/models/login_model.dart';
 import 'package:a2zjewelry/features/login/data/models/login_res_model.dart';
 import 'package:a2zjewelry/features/profile/data/models/profile_res_model.dart';
-import 'package:a2zjewelry/router/app_router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:a2zjewelry/core/utils/env_components.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class LoginRemote {
@@ -43,7 +43,7 @@ class LoginRemote {
             if (context.mounted) {
               if (await fetchUserProfile(context)) {
                 if (context.mounted) {
-                NavigationService.goHome();
+               context.go('/start/home');
                 }
               }
             }

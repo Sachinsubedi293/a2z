@@ -5,7 +5,6 @@ import 'package:a2zjewelry/features/profile/data/datasources/profile_remote.dart
 import 'package:a2zjewelry/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:a2zjewelry/features/profile/domain/entities/profile_entity.dart';
 import 'package:a2zjewelry/features/profile/domain/usecases/profile_usecase.dart';
-import 'package:a2zjewelry/router/app_router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,9 +35,6 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
       state = state.copyWith(loading: true);
       await profileUserUseCase.call(entity, avatarFile);
       state = state.copyWith(loading: false, error: null);
-
-      // Ensure NavigationService is properly implemented
-      NavigationService.goLogin(); // Adjust according to your navigation logic
     } catch (e) {
       state = state.copyWith(loading: false, error: e.toString());
     }

@@ -1,9 +1,9 @@
-import 'package:a2zjewelry/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:a2zjewelry/features/login/domain/entities/login_entity.dart';
 import 'package:a2zjewelry/features/login/presentation/providers/login_provider.dart';
 import 'package:a2zjewelry/features/register/presentation/widgets/loading_widget.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -94,7 +94,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           
                           InkWell(
                             onTap: () {
-                             NavigationService.goForgot();
+                            context.go('/forgot');
                             },
                             child: const Text(
                               'Forgot password?',
@@ -126,7 +126,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           const Text('New Here? '),
                           InkWell(
                             onTap: () {
-                              NavigationService.goRegister();
+                             context.go('/register');
                             },
                             child: const Text(
                               'Register now',

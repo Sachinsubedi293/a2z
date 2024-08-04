@@ -1,5 +1,5 @@
-import 'package:a2zjewelry/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 class PageNotFound extends StatelessWidget {
   const PageNotFound({super.key});
 
@@ -18,7 +18,7 @@ class PageNotFound extends StatelessWidget {
           fontSize: 24.0,
         ),),
         SizedBox(height: 20,),
-        ElevatedButton(onPressed: (){NavigationService.goLogin();}, child: Text('Go to initial Page'))
+        ElevatedButton(onPressed: (){context.go('login');}, child: Text('Go to initial Page'))
           ],
         )
       ),

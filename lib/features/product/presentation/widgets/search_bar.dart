@@ -1,4 +1,4 @@
-import 'package:a2zjewelry/features/search_product/presentation/providers/product_provider.dart';
+import 'package:a2zjewelry/features/product/presentation/providers/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

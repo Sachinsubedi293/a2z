@@ -26,6 +26,19 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
+    List<ImageModel> imageList = (json['images'] as List<dynamic>?)
+        ?.map((img) => ImageModel.fromJson(img))
+        .toList() ?? [];
+
+    // Set the first image to the specific URL if the list is not empty
+    if (imageList.isNotEmpty) {
+      imageList[0] = ImageModel(
+        id: imageList[0].id,
+        image: 'https://discord.com/assets/a0180771ce23344c2a95.png',
+        product: imageList[0].product,
+      );
+    }
+
     return ProductModel(
       id: json['id'],
       productName: json['ProductName'],
@@ -37,11 +50,11 @@ class ProductModel {
       createdAt: DateTime.parse(json['CreatedAt']),
       updatedAt: DateTime.parse(json['UpdatedAt']),
       category: CategoryModel.fromJson(json['CategoryID']),
-      images: (json['images'] as List<dynamic>)
-          .map((img) => ImageModel.fromJson(img))
-          .toList(),
+      images: imageList,
     );
   }
+
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -63,25 +76,16 @@ class ProductModel {
 class CategoryModel {
   final int id;
   final String categoryName;
-  final String slug;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
   CategoryModel({
     required this.id,
     required this.categoryName,
-    required this.slug,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
-      id: json['id'],
+      id: json['id'] ?? 0,
       categoryName: json['CategoryName'],
-      slug: json['slug'],
-      createdAt: DateTime.parse(json['CreatedAt']),
-      updatedAt: DateTime.parse(json['UpdatedAt']),
     );
   }
 
@@ -89,9 +93,6 @@ class CategoryModel {
     return {
       'id': id,
       'CategoryName': categoryName,
-      'slug': slug,
-      'CreatedAt': createdAt.toIso8601String(),
-      'UpdatedAt': updatedAt.toIso8601String(),
     };
   }
 }
