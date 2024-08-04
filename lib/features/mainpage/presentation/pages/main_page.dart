@@ -1,13 +1,13 @@
+import 'package:a2zjewelry/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:a2zjewelry/features/cart/presentation/pages/cart_page.dart';
-import 'package:a2zjewelry/features/category/presentation/pages/category_page.dart';
-import 'package:a2zjewelry/features/search/presentation/pages/search_page.dart';
-import 'package:a2zjewelry/features/wishlist/presentation/pages/wish_list_page.dart';
-import 'package:a2zjewelry/features/homepage/presentation/pages/home_page.dart';
+import 'package:a2zjewelry/features/mainpage/presentation/widgets/drop_down_menu.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final Widget child;
+
+  const MainPage({required this.child, super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -15,23 +15,32 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  final PageController _pageController = PageController();
 
-  // Example counters
   final int _notificationsCount = 3;
   final int _cartItemCount = 5;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    _pageController.animateToPage(index,
-        duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+
+    switch (index) {
+      case 0:
+        NavigationService.goHome();
+        break;
+      case 1:
+        NavigationService.goToCategories();
+        break;
+      case 2:
+        NavigationService.goToSearch();
+        break;
+      case 3:
+        NavigationService.goToCart();
+        break;
+      case 4:
+        NavigationService.goToWishlist();
+        break;
+    }
   }
 
   @override
@@ -57,24 +66,14 @@ class _MainPageState extends State<MainPage> {
               onPressed: () {},
             ),
           ),
+          UserAvatarMenu(
+            avatarUrl:
+                'https://example.com/avatar.jpg', // Replace with the actual URL
+          ),
         ],
       ),
       drawer: _buildDrawer(),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        children: [
-          HomePage(),
-          CategoriesPage(),
-          SearchPage(),
-          CartPage(),
-          WishlistPage(),
-        ],
-      ),
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -141,14 +140,13 @@ class _MainPageState extends State<MainPage> {
               children: [
                 Positioned(
                   child: Text(
-                    'Drawer Header',
+                    'A2Z Jewelry',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                     ),
                   ),
                 ),
-                
               ],
             ),
           ),
@@ -156,7 +154,7 @@ class _MainPageState extends State<MainPage> {
             leading: Icon(Icons.home),
             title: Text('Home'),
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
               _onItemTapped(0);
             },
           ),
@@ -164,7 +162,7 @@ class _MainPageState extends State<MainPage> {
             leading: Icon(Icons.category),
             title: Text('Categories'),
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
               _onItemTapped(1);
             },
           ),
@@ -172,7 +170,7 @@ class _MainPageState extends State<MainPage> {
             leading: Icon(Icons.search),
             title: Text('Search'),
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
               _onItemTapped(2);
             },
           ),
@@ -180,7 +178,7 @@ class _MainPageState extends State<MainPage> {
             leading: Icon(Icons.shopping_cart),
             title: Text('Cart'),
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
               _onItemTapped(3);
             },
           ),
@@ -188,8 +186,16 @@ class _MainPageState extends State<MainPage> {
             leading: Icon(Icons.favorite),
             title: Text('Wishlist'),
             onTap: () {
-              Navigator.pop(context);
+              context.pop();
               _onItemTapped(4);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Profile'),
+            onTap: () {
+              context.pop();
+             NavigationService.goToProfile();
             },
           ),
         ],

@@ -1,3 +1,4 @@
+import 'package:a2zjewelry/core/utils/env_components.dart';
 import 'package:dio/dio.dart';
 
 class DioClient {
@@ -11,7 +12,7 @@ class DioClient {
 
   Dio createDio() {
     return Dio(BaseOptions(
-      baseUrl: 'https://tech33.pythonanywhere.com',
+      baseUrl: baseUrl,
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json'

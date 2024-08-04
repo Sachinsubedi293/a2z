@@ -1,9 +1,9 @@
+import 'package:a2zjewelry/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:a2zjewelry/features/forgot_password/domain/entities/forgot_entity.dart';
 import 'package:a2zjewelry/features/forgot_password/presentation/providers/forgot_provider.dart';
 import 'package:a2zjewelry/features/register/presentation/widgets/loading_widget.dart';
-import 'package:go_router/go_router.dart';
 
 class ForgotPage extends ConsumerStatefulWidget {
   const ForgotPage({super.key});
@@ -96,7 +96,7 @@ class _ForgotPageState extends ConsumerState<ForgotPage> {
                   const SizedBox(height: 30.0),
                   Row(mainAxisAlignment: MainAxisAlignment.center,children: [InkWell(
                     onTap: () {
-                      context.go('/login'); 
+                      NavigationService.goLogin();
                     },
                     child: const Text(
                       '<-- Back to Login',

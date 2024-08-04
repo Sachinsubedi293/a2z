@@ -1,3 +1,4 @@
+import 'package:a2zjewelry/router/app_router.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,9 @@ class RegisterRemoteDataSource {
 
       if (response.statusCode == 200) {
         if (context.mounted) {
-        EnvComponents.showSuccessDialog(context, response.data);}
+        await EnvComponents.showSuccessDialog(context, response.data);
+        NavigationService.goLogin();
+        }
         if (kDebugMode) {
           print('Registration successful: ${response.data}');
         }

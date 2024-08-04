@@ -1,11 +1,13 @@
+import 'package:a2zjewelry/features/cart/presentation/widgets/cart_item.dart.dart';
 import 'package:flutter/material.dart';
+import '../widgets/total_price.dart';
 
 class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildCartItems(),
-      bottomNavigationBar: _buildTotalPrice(),
+      bottomNavigationBar: TotalPrice(totalPrice: _calculateTotalPrice()),
     );
   }
 
@@ -35,48 +37,20 @@ class CartPage extends StatelessWidget {
     return ListView.builder(
       itemCount: cartItems.length,
       itemBuilder: (context, index) {
-        return _buildCartItem(
-          cartItems[index]['title']!,
-          cartItems[index]['price']!,
-          cartItems[index]['quantity']!,
-          cartItems[index]['imageUrl']!,
+        return CartItem(
+          title: cartItems[index]['title']!,
+          price: cartItems[index]['price']!,
+          quantity: cartItems[index]['quantity']!,
+          imageUrl: cartItems[index]['imageUrl']!,
+          onDelete: () {
+            // Implement remove item functionality here
+          },
         );
       },
     );
   }
 
-  Widget _buildCartItem(String title, String price, String quantity, String imageUrl) {
-    return ListTile(
-      leading: Image.network(imageUrl, width: 50, height: 50, fit: BoxFit.cover),
-      title: Text(title),
-      subtitle: Text('Price: \$$price\nQuantity: $quantity'),
-      trailing: IconButton(
-        icon: Icon(Icons.delete),
-        onPressed: () {
-          // Implement remove item functionality here
-        },
-      ),
-    );
-  }
-
-  Widget _buildTotalPrice() {
-    double totalPrice = 120.00 + 450.00 + 80.00 * 2; // Example total price calculation
-
-    return Container(
-      padding: EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Total Price:',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            '\$$totalPrice',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
+  double _calculateTotalPrice() {
+    return 120.00 + 450.00 + 80.00 * 2; // Example total price calculation
   }
 }
