@@ -1,4 +1,5 @@
 import 'package:a2zjewelry/features/product/presentation/providers/product_detail_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,9 +27,9 @@ class ProductDetailPage extends ConsumerWidget {
       body: productDetailAsyncValue.when(
         data: (product) {
           final List<String> imageUrls = [
-            'https://via.placeholder.com/400x200.png?text=Image+1',
-            'https://via.placeholder.com/400x200.png?text=Image+2',
-            'https://via.placeholder.com/400x200.png?text=Image+3',
+            'https://www.freepnglogos.com/uploads/discord-logo-png/discord-logo-logodownload-download-logotipos-1.png',
+            'https://www.freepnglogos.com/uploads/discord-logo-png/discord-logo-logodownload-download-logotipos-1.png',
+            'https://www.freepnglogos.com/uploads/discord-logo-png/discord-logo-logodownload-download-logotipos-1.png',
           ];
 
           return Padding(
@@ -37,18 +38,21 @@ class ProductDetailPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 200,
-                  child: PageView.builder(
-                    itemCount: imageUrls.length,
-                    itemBuilder: (context, index) {
-                      return Image.network(
-                        imageUrls[index],
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      );
-                    },
-                  ),
-                ),
+                    height: 200,
+                    child: PageView.builder(
+                      itemCount: imageUrls.length,
+                      itemBuilder: (context, index) {
+                        return CachedNetworkImage(
+                          imageUrl: imageUrls[index],
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          placeholder: (context, url) =>
+                              Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              Center(child: Icon(Icons.error)),
+                        );
+                      },
+                    )),
                 SizedBox(height: 16.0),
                 Text(
                   'Product Name: ${product.productName}',
@@ -79,7 +83,7 @@ class ProductDetailPage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showQuantityDialog(context,cart);
+          _showQuantityDialog(context, cart);
         },
         child: Icon(Icons.shopping_cart),
         tooltip: 'Add to Cart',
@@ -87,7 +91,7 @@ class ProductDetailPage extends ConsumerWidget {
     );
   }
 
-  void _showQuantityDialog(BuildContext context,cart) {
+  void _showQuantityDialog(BuildContext context, cart) {
     final TextEditingController quantityController = TextEditingController();
 
     showDialog(

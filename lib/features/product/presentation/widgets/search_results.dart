@@ -37,7 +37,7 @@ class SearchResults extends StatelessWidget {
                 id: product.id,
                 title: product.productName,
                 price: product.price,
-                imageUrl:  'https://via.placeholder.com/150', // Placeholder image URL
+                imageUrl:  'https://www.freepnglogos.com/uploads/discord-logo-png/discord-logo-logodownload-download-logotipos-1.png', // Placeholder image URL
               );
             },
           );

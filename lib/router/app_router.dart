@@ -16,8 +16,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class AppRouter {
-  final GlobalKey<NavigatorState> _rootNavigatorKey =
-      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
   GoRouter get router => GoRouter(
         navigatorKey: _rootNavigatorKey,
@@ -52,7 +51,6 @@ class AppRouter {
             path: '/details/:id',
             builder: (context, state) {
               final id = int.parse(state.pathParameters['id']!);
-
               return ProductDetailPage(id: id);
             },
           ),
@@ -86,51 +84,4 @@ class AppRouter {
           return PageNotFound();
         },
       );
-}
-
-class NavigationService {
-  static void goLogin(_router) {
-    print('Navigating to login');
-    _router.go('/login');
-  }
-
-  static void goRegister(_router) {
-    print('Navigating to register');
-    _router.go('/register');
-  }
-
-  static void goForgot(_router) {
-    print('Navigating to forgot');
-    _router.go('/forgot');
-  }
-
-  static void goHome(_router) {
-    print('Navigating to home');
-    _router.go('/start/home');
-  }
-
-  static void goToProfile(_router) {
-    print('Navigating to profile');
-    _router.go('/profile');
-  }
-
-  static void goToCategories(_router) {
-    print('Navigating to categories');
-    _router.go('/start/categories');
-  }
-
-  static void goToSearch(_router) {
-    print('Navigating to search');
-    _router.go('/start/search');
-  }
-
-  static void goToCart(_router) {
-    print('Navigating to cart');
-    _router.go('/start/cart');
-  }
-
-  static void goToWishlist(_router) {
-    print('Navigating to wishlist');
-    _router.go('/start/wishlist');
-  }
 }
