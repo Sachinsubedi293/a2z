@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const baseUrl = "https://bikramsubedi.com.np";
+const baseUrl = "http://10.0.2.2:8000";
 
 class EnvComponents {
   static bool isValidEmail(String email) {

@@ -11,7 +11,7 @@ class DioClient {
 
   Dio createDio() {
     return Dio(BaseOptions(
-      baseUrl: 'https://bikramsubedi.com.np',
+      baseUrl: 'http://10.0.2.2:8000',
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json'

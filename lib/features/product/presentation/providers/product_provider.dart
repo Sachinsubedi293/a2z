@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:a2zjewelry/features/product/data/datasources/cart_add_remote.dart';
 import 'package:a2zjewelry/features/product/data/datasources/product_fetch_id.dart';
 import 'package:a2zjewelry/features/product/data/repositories/product_repo_impl.dart';
 import 'package:a2zjewelry/features/product/domain/entities/search_product.dart';
@@ -119,10 +120,16 @@ final productServiceProvider = Provider((ref) {
   return ProductService(dio);
 });
 
+final cartServiceprovider=Provider((ref){
+final dio=ref.read(dioProvider);
+return ProductCartService(dio);
+});
+
 // Repository provider
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
   final productService = ref.read(productServiceProvider);
-  return ProductRepositoryImpl(productService);
+  final cartservice=ref.read(cartServiceprovider);
+  return ProductRepositoryImpl(productService,cartservice);
 });
 
 // Use case provider

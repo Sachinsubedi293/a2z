@@ -18,7 +18,6 @@ class _MainPageState extends State<MainPage> {
   final int _notificationsCount = 3;
   final int _cartItemCount = 5;
 
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -45,6 +44,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Retrieve the avatar URL safely
+    final profile = HiveService().profileBox.get('profile');
+    final avatarUrl = profile?.avatar ?? 'default_avatar.png'; 
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -66,7 +69,8 @@ class _MainPageState extends State<MainPage> {
               onPressed: () {},
             ),
           ),
-          UserAvatarMenu(avatarUrl: HiveService().profileBox.get('profile')!.avatar!),
+
+          UserAvatarMenu(avatarUrl: avatarUrl),
         ],
       ),
       drawer: _buildDrawer(),
@@ -99,7 +103,7 @@ class _MainPageState extends State<MainPage> {
             label: 'Cart',
           ),
           BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite),
+            icon: Icon(Icons.favorite),
             label: 'Wishlist',
           ),
         ],
@@ -187,7 +191,6 @@ class _MainPageState extends State<MainPage> {
               _onItemTapped(4);
             },
           ),
-         
         ],
       ),
     );

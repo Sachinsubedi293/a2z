@@ -12,7 +12,7 @@ class ProductService {
       int page, int pageSize, String query) async {
     try {
       final response = await _dio.get(
-        'https://bikramsubedi.com.np/api/v1/products/list',
+        'http://10.0.2.2:8000/api/v1/products/list',
         queryParameters: {
           'page': page,
           'page_size': pageSize,
@@ -62,7 +62,7 @@ class ProductService {
   Future<List<ProductModel>> fetchProductwithId(int id) async {
     try {
       final response = await _dio.get(
-        'https://bikramsubedi.com.np/api/v1/products/$id/',
+        'http://10.0.2.2:8000/api/v1/products/$id/',
       );
 
       final data = response.data as Map<String, dynamic>;

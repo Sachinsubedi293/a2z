@@ -6,13 +6,13 @@ import 'package:go_router/go_router.dart';
 class ProductDetailPage extends ConsumerWidget {
   final int id;
 
-  // Constructor to accept the id parameter
   const ProductDetailPage({required this.id, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Use the id to get the product detail from the provider
-    final productDetailAsyncValue = ref.watch(productDetailNotifierProvider(id));
+    final productDetailAsyncValue =
+        ref.watch(productDetailNotifierProvider(id));
+    final cart = ref.watch(cartServiceprovider);
 
     return Scaffold(
       appBar: AppBar(
@@ -25,7 +25,6 @@ class ProductDetailPage extends ConsumerWidget {
       ),
       body: productDetailAsyncValue.when(
         data: (product) {
-          // For demonstration purposes, using placeholder images for carousel
           final List<String> imageUrls = [
             'https://via.placeholder.com/400x200.png?text=Image+1',
             'https://via.placeholder.com/400x200.png?text=Image+2',
@@ -37,7 +36,6 @@ class ProductDetailPage extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Carousel using PageView
                 Container(
                   height: 200,
                   child: PageView.builder(
@@ -79,6 +77,50 @@ class ProductDetailPage extends ConsumerWidget {
         loading: () => Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showQuantityDialog(context,cart);
+        },
+        child: Icon(Icons.shopping_cart),
+        tooltip: 'Add to Cart',
+      ),
+    );
+  }
+
+  void _showQuantityDialog(BuildContext context,cart) {
+    final TextEditingController quantityController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Enter Quantity'),
+          content: TextField(
+            controller: quantityController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: 'Quantity',
+              hintText: 'Enter quantity',
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                final quantity = int.tryParse(quantityController.text) ?? 1;
+                cart.addToCart(id, quantity);
+                Navigator.of(context).pop();
+              },
+              child: Text('Add to Cart'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

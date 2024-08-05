@@ -1,4 +1,5 @@
 
+import 'package:a2zjewelry/features/product/data/datasources/cart_add_remote.dart';
 import 'package:a2zjewelry/features/product/data/datasources/product_fetch_id.dart';
 import 'package:a2zjewelry/features/product/data/models/search_model.dart';
 import 'package:a2zjewelry/features/product/domain/entities/search_product.dart';
@@ -6,8 +7,9 @@ import 'package:a2zjewelry/features/product/domain/repositories/product_repo.dar
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductService productService;
+  final ProductCartService cartService;
 
-  ProductRepositoryImpl(this.productService);
+  ProductRepositoryImpl(this.productService,this.cartService);
 
   @override
   Future<List<Product>> fetchProducts(int page, int pageSize, String query) async {
@@ -47,4 +49,8 @@ class ProductRepositoryImpl implements ProductRepository {
       )).toList(),
     );
   }
+  @override
+ Future<void> addToCart(int productId,int quantity)async {
+  await cartService.addToCart(productId, quantity);
+ }
 }
