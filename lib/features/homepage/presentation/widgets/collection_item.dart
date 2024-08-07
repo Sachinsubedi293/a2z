@@ -5,12 +5,12 @@ class CollectionItem extends StatelessWidget {
   final String imageUrl;
   final String subtitle;
 
-  const CollectionItem({required this.title, required this.imageUrl, required this.subtitle});
+  const CollectionItem({super.key, required this.title, required this.imageUrl, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       width: double.infinity,
       height: 100,
       decoration: BoxDecoration(
@@ -26,7 +26,7 @@ class CollectionItem extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class CollectionItem extends StatelessWidget {
             ),
             Text(
               subtitle,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
               ),

@@ -18,6 +18,8 @@ class CategoriesPage extends StatelessWidget {
     {'title': 'Silver Jewelry', 'imageUrl': 'https://example.com/silver.jpg'},
   ];
 
+  CategoriesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +32,13 @@ class CategoriesPage extends StatelessWidget {
               onChanged: (value) {
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             SectionTitle(title: 'Categories'),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             CategoriesGrid(categories: _categories),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             SectionTitle(title: 'Featured'),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             FeaturedCategories(featuredCategories: _featuredCategories),
           ],
         ),

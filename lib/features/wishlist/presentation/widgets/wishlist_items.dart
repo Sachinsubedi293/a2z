@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'wishlist_item.dart';
 
 class WishlistItems extends StatelessWidget {
+  const WishlistItems({super.key});
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, String>> wishlistItems = [

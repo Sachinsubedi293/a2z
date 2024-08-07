@@ -1,22 +1,22 @@
-import 'package:a2zjewelry/core/hive/hive_utils.dart';
+import 'package:a2zjewelry/features/cart/presentation/providers/cart_providers.dart';
 import 'package:a2zjewelry/features/mainpage/presentation/widgets/drop_down_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:badges/badges.dart' as badges;
 
-class MainPage extends StatefulWidget {
+class MainPage extends ConsumerStatefulWidget {
   final Widget child;
 
-  const MainPage({required this.child, Key? key}) : super(key: key);
+  const MainPage({required this.child, super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends ConsumerState<MainPage> {
   int _selectedIndex = 0;
   final int _notificationsCount = 3;
-  final int _cartItemCount = 5;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -44,70 +44,79 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the avatar URL safely
-    final profile = HiveService().profileBox.get('profile');
-    final avatarUrl = profile?.avatar ?? 'default_avatar.png'; 
+    return Consumer(
+      builder: (context, ref, child) {
+      
+        final cartState = ref.watch(cartStateProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          _getAppBarTitle(_selectedIndex),
-          style: TextStyle(color: Colors.black),
-        ),
-        actions: [
-          badges.Badge(
-            position: badges.BadgePosition.topEnd(top: 8, end: 8),
-            badgeContent: Text(
-              '$_notificationsCount',
-              style: TextStyle(color: Colors.white),
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: Text(
+              _getAppBarTitle(_selectedIndex),
+              style: const TextStyle(color: Colors.black),
             ),
-            badgeStyle: badges.BadgeStyle(badgeColor: Colors.deepOrange),
-            child: IconButton(
-              icon: Icon(Icons.notifications, color: Colors.black),
-              onPressed: () {},
-            ),
-          ),
-
-          UserAvatarMenu(avatarUrl: avatarUrl),
-        ],
-      ),
-      drawer: _buildDrawer(),
-      body: widget.child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Categories',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: badges.Badge(
-              badgeContent: Text(
-                '$_cartItemCount',
-                style: TextStyle(color: Colors.white),
+            actions: [
+              IconButton(onPressed: (){
+                context.go('/vendor/analytics');
+              }, icon: Icon(Icons.sell)),
+              badges.Badge(
+                position: badges.BadgePosition.topEnd(top: 8, end: 8),
+                badgeContent: Text(
+                  '${_notificationsCount}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+                badgeStyle: const badges.BadgeStyle(badgeColor: Colors.deepOrange),
+                child: IconButton(
+                  icon: const Icon(Icons.notifications, color: Colors.black),
+                  onPressed: () {},
+                ),
               ),
-              badgeStyle: badges.BadgeStyle(badgeColor: Colors.deepOrange),
-              child: Icon(Icons.shopping_cart),
-            ),
-            label: 'Cart',
+              UserAvatarMenu(),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Wishlist',
+          drawer: _buildDrawer(),
+          body: widget.child,
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            items: [
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.category),
+                label: 'Categories',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Search',
+              ),
+              BottomNavigationBarItem(
+                icon: badges.Badge(
+                  badgeContent: Text(
+                    cartState.when(
+                      data: (cart) => '${cart.items.length}',
+                      loading: () => '...',
+                      error: (_, __) => '0',
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  badgeStyle: const badges.BadgeStyle(badgeColor: Colors.deepOrange),
+                  child: const Icon(Icons.shopping_cart),
+                ),
+                label: 'Cart',
+              ),
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: 'Wishlist',
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -133,7 +142,7 @@ class _MainPageState extends State<MainPage> {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.deepOrange,
             ),
@@ -152,40 +161,40 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
             onTap: () {
               context.pop();
               _onItemTapped(0);
             },
           ),
           ListTile(
-            leading: Icon(Icons.category),
-            title: Text('Categories'),
+            leading: const Icon(Icons.category),
+            title: const Text('Categories'),
             onTap: () {
               context.pop();
               _onItemTapped(1);
             },
           ),
           ListTile(
-            leading: Icon(Icons.search),
-            title: Text('Search'),
+            leading: const Icon(Icons.search),
+            title: const Text('Search'),
             onTap: () {
               context.pop();
               _onItemTapped(2);
             },
           ),
           ListTile(
-            leading: Icon(Icons.shopping_cart),
-            title: Text('Cart'),
+            leading: const Icon(Icons.shopping_cart),
+            title: const Text('Cart'),
             onTap: () {
               context.pop();
               _onItemTapped(3);
             },
           ),
           ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Wishlist'),
+            leading: const Icon(Icons.favorite),
+            title: const Text('Wishlist'),
             onTap: () {
               context.pop();
               _onItemTapped(4);

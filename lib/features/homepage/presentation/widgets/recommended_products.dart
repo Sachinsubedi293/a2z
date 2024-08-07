@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'product_item.dart';
 
 class RecommendedProducts extends StatelessWidget {
+  const RecommendedProducts({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [

@@ -155,9 +155,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                             onTap: () {
                                               // Handle the tap event for terms and conditions
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               'Terms and Conditions.',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   color: Colors.red),
                                               maxLines:
                                                   null, // Allow unlimited lines

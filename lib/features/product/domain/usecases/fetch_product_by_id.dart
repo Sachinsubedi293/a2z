@@ -1,4 +1,4 @@
-import 'package:a2zjewelry/features/product/domain/entities/search_product.dart';
+import 'package:a2zjewelry/features/product/domain/entities/product_entity.dart';
 import 'package:a2zjewelry/features/product/domain/repositories/product_repo.dart';
 
 class FetchProductById {

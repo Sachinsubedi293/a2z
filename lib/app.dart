@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
 
-  MyApp({super.key});
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -77,12 +77,12 @@ class MyApp extends StatelessWidget {
             },
           ),
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           unselectedItemColor: Colors.grey,
           selectedItemColor: Colors.deepOrange,
           backgroundColor: Colors.white,
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.deepOrange,
         ),
         cardTheme: CardTheme(

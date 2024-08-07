@@ -4,12 +4,12 @@ class FeaturedCategoryItem extends StatelessWidget {
   final String title;
   final String imageUrl;
 
-  FeaturedCategoryItem({required this.title, required this.imageUrl});
+  const FeaturedCategoryItem({super.key, required this.title, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: 16),
       width: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -33,7 +33,7 @@ class FeaturedCategoryItem extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.bold,

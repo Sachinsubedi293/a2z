@@ -5,6 +5,8 @@ import 'package:a2zjewelry/features/cart/presentation/widgets/total_price.dart';
 import '../widgets//cart_item.dart.dart';
 
 class CartPage extends ConsumerWidget {
+  const CartPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cartState = ref.watch(cartStateProvider);
@@ -39,7 +41,7 @@ class CartPage extends ConsumerWidget {
             ],
           );
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Center(
           child: Text('Error: $error\nStackTrace: $stackTrace'),
         ),

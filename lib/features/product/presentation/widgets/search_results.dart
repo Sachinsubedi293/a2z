@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:a2zjewelry/features/product/domain/entities/search_product.dart';
+import 'package:a2zjewelry/features/product/domain/entities/product_entity.dart';
 import 'package:a2zjewelry/features/product/presentation/widgets/search_result_item.dart';
 
 class SearchResults extends StatelessWidget {
   final List<Product> products;
 
   const SearchResults({
-    Key? key,
+    super.key,
     required this.products,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return products.isEmpty
-        ? Center(
+        ? const Center(
             child: Text(
               'No products found',
               style: TextStyle(
@@ -24,8 +24,8 @@ class SearchResults extends StatelessWidget {
             ),
           )
         : GridView.builder(
-            padding: EdgeInsets.all(16),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            padding: const EdgeInsets.all(16),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
@@ -34,9 +34,9 @@ class SearchResults extends StatelessWidget {
             itemBuilder: (context, index) {
               final product = products[index];
               return SearchResultItem(
-                id: product.id,
-                title: product.productName,
-                price: product.price,
+                id: product.id!,
+                title: product.name,
+                price: product.price.toString(),
                 imageUrl:  'https://www.freepnglogos.com/uploads/discord-logo-png/discord-logo-logodownload-download-logotipos-1.png', // Placeholder image URL
               );
             },

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SearchBar1 extends ConsumerWidget {
+  const SearchBar1({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextField(
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'Search for jewelry...',
         border: InputBorder.none,
         contentPadding: EdgeInsets.symmetric(horizontal: 16),

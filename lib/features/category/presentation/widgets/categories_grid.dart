@@ -4,7 +4,7 @@ import 'category_item.dart';
 class CategoriesGrid extends StatelessWidget {
   final List<Map<String, String>> categories;
 
-  CategoriesGrid({required this.categories});
+  const CategoriesGrid({super.key, required this.categories});
 
   @override
   Widget build(BuildContext context) {

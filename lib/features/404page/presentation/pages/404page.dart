@@ -13,12 +13,12 @@ class PageNotFound extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Opps!!!\nPage not found. Please try again.',style: TextStyle(
+            const Text('Opps!!!\nPage not found. Please try again.',style: TextStyle(
           color: Colors.red,
           fontSize: 24.0,
         ),),
-        SizedBox(height: 20,),
-        ElevatedButton(onPressed: (){context.go('login');}, child: Text('Go to initial Page'))
+        const SizedBox(height: 20,),
+        ElevatedButton(onPressed: (){context.go('/login');}, child: const Text('Go to initial Page'))
           ],
         )
       ),

@@ -5,7 +5,7 @@ class WishlistItem extends StatelessWidget {
   final String price;
   final String imageUrl;
 
-  const WishlistItem({
+  const WishlistItem({super.key, 
     required this.title,
     required this.price,
     required this.imageUrl,
@@ -18,7 +18,7 @@ class WishlistItem extends StatelessWidget {
       title: Text(title),
       subtitle: Text('\$$price'),
       trailing: IconButton(
-        icon: Icon(Icons.add_shopping_cart),
+        icon: const Icon(Icons.add_shopping_cart),
         onPressed: () {
           // Implement add to cart functionality here
         },

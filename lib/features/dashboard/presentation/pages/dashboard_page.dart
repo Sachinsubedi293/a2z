@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class VendorDashboard extends StatelessWidget {
+  const VendorDashboard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Vendor Dashboard'),
+        title: const Text('Vendor Dashboard'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -19,10 +21,10 @@ class VendorDashboard extends StatelessWidget {
   }
 
   Widget _buildSalesOverview() {
-    return Card(
+    return const Card(
       margin: EdgeInsets.all(16.0),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,10 +39,10 @@ class VendorDashboard extends StatelessWidget {
   }
 
   Widget _buildRecentActivity() {
-    return Card(
+    return const Card(
       margin: EdgeInsets.all(16.0),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

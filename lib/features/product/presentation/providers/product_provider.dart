@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:a2zjewelry/features/product/data/datasources/cart_add_remote.dart';
 import 'package:a2zjewelry/features/product/data/datasources/product_fetch_id.dart';
 import 'package:a2zjewelry/features/product/data/repositories/product_repo_impl.dart';
-import 'package:a2zjewelry/features/product/domain/entities/search_product.dart';
+import 'package:a2zjewelry/features/product/domain/entities/product_entity.dart';
 import 'package:a2zjewelry/features/product/domain/repositories/product_repo.dart';
 import 'package:a2zjewelry/features/product/domain/usecases/search_fetch_products.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

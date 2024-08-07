@@ -28,6 +28,7 @@ class EnvComponents {
   }
 
   await showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
@@ -64,6 +65,7 @@ static Future<bool> showSuccessDialog(BuildContext context, dynamic message) asy
   }
 
   return await showDialog<bool>(
+        barrierDismissible: false,
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(

@@ -4,7 +4,7 @@ import 'featured_category_item.dart';
 class FeaturedCategories extends StatelessWidget {
   final List<Map<String, String>> featuredCategories;
 
-  FeaturedCategories({required this.featuredCategories});
+  const FeaturedCategories({super.key, required this.featuredCategories});
 
   @override
   Widget build(BuildContext context) {

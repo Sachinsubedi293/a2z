@@ -1,3 +1,4 @@
+import 'package:a2zjewelry/core/hive/hive_utils.dart';
 import 'package:a2zjewelry/core/utils/env_components.dart';
 import 'package:a2zjewelry/features/profile/data/models/profile_res_model.dart';
 import 'package:flutter/material.dart';
@@ -7,37 +8,38 @@ import 'package:a2zjewelry/features/login/data/models/login_res_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class UserAvatarMenu extends StatelessWidget {
-  final String avatarUrl;
-
-  UserAvatarMenu({required this.avatarUrl});
+  const UserAvatarMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final profile = HiveService().profileBox.get('profile');
+    final avatarUrl = profile?.avatar ?? 'default_avatar.png';
+
     return PopupMenuButton<String>(
       icon: CircleAvatar(
-        radius: 24, 
+        radius: 24,
         backgroundColor: Colors.deepOrange,
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: Colors.deepOrange, 
-              width: 3, 
+              color: Colors.deepOrange,
+              width: 3,
             ),
           ),
           child: CircleAvatar(
-            backgroundImage: CachedNetworkImageProvider(baseUrl + avatarUrl),
+            backgroundImage: CachedNetworkImageProvider('$baseUrl$avatarUrl'),
           ),
         ),
       ),
-      offset: Offset(0, 50),
+      offset: const Offset(0, 50),
       itemBuilder: (BuildContext context) {
         return [
-          PopupMenuItem<String>(
+          const PopupMenuItem<String>(
             value: 'Profile',
             child: Text('Profile'),
           ),
-          PopupMenuItem<String>(
+          const PopupMenuItem<String>(
             value: 'Logout',
             child: Text('Logout'),
           ),
@@ -45,7 +47,7 @@ class UserAvatarMenu extends StatelessWidget {
       },
       onSelected: (value) {
         if (value == 'Profile') {
-          context.go('/profile');
+          context.push('/profile');
         } else if (value == 'Logout') {
           _showLogoutDialog(context);
         }
@@ -58,22 +60,23 @@ class UserAvatarMenu extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Logout'),
-          content: Text('Are you sure you want to logout?'),
+          title: const Text('Logout'),
+          content: const Text('Are you sure you want to logout?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Sure'),
+              child: const Text('Sure'),
               onPressed: () async {
                 // Clear Hive boxes
                 await Hive.box<LoginResModel>('loginBox').clear();
                 await Hive.box<ProfileResModel>('profileBox').clear();
 
+                // Navigate to login page
                 context.go('/login');
               },
             ),

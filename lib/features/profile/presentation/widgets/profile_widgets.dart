@@ -77,7 +77,7 @@ class ProfileActions extends StatelessWidget {
   final Future<void> Function(BuildContext) onSave;
   final VoidCallback onCancel;
 
-  ProfileActions({
+  const ProfileActions({super.key, 
     required this.onSave,
     required this.onCancel,
   });
@@ -91,11 +91,11 @@ class ProfileActions extends StatelessWidget {
         
         ElevatedButton(
           onPressed: onCancel,
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         ElevatedButton(
           onPressed: () => onSave(context),
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     );

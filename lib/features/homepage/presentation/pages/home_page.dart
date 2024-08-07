@@ -8,6 +8,8 @@ import 'package:a2zjewelry/features/homepage/presentation/widgets/top_collection
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,17 +20,17 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BannerWidget(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               CategoryRow(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               SectionTitle(title: 'Feature Products'),
               FeatureProducts(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               CollectionBanner(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               SectionTitle(title: 'Recommended'),
               RecommendedProducts(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               SectionTitle(title: 'Top Collection'),
               TopCollection(),
             ],

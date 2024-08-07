@@ -6,13 +6,13 @@ class ProductItem extends StatelessWidget {
   final double price;
   final String imageUrl;
 
-  const ProductItem({required this.title, required this.price, required this.imageUrl});
+  const ProductItem({super.key, required this.title, required this.price, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 150,
-      margin: EdgeInsets.only(right: 16),
+      margin: const EdgeInsets.only(right: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,7 +26,7 @@ class ProductItem extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(title),
           Text('\$$price'),
         ],

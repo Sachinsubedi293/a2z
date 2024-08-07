@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SearchPage extends ConsumerWidget {
+  const SearchPage({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchResults = ref.watch(productNotifierProvider);
@@ -17,9 +19,9 @@ class SearchPage extends ConsumerWidget {
       ),
       body: searchResults.when(
         data: (products) => products.isEmpty
-            ? Center(child: Text("No Products Available"))
+            ? const Center(child: Text("No Products Available"))
             : SearchResults(products: products),
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
       ),
     );

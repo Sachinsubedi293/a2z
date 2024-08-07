@@ -62,7 +62,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        leading: IconButton(onPressed: (){context.go('/start/home');}, icon: Icon(Icons.arrow_back)),
+        leading: IconButton(onPressed: (){context.pop();}, icon: const Icon(Icons.arrow_back)),
       ),
       body: profileState.loading
           ? const Center(child: CircularProgressIndicator())

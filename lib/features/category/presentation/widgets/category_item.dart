@@ -4,7 +4,7 @@ class CategoryItem extends StatelessWidget {
   final String title;
   final String imageUrl;
 
-  CategoryItem({required this.title, required this.imageUrl});
+  const CategoryItem({super.key, required this.title, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class CategoryItem extends StatelessWidget {
           child: Center(
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

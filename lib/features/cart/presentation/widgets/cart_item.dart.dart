@@ -7,7 +7,7 @@ class CartItem extends StatelessWidget {
   final String imageUrl;
   final VoidCallback onDelete;
 
-  CartItem({
+  const CartItem({super.key, 
     required this.title,
     required this.quantity,
     required this.imageUrl,
@@ -22,13 +22,13 @@ class CartItem extends StatelessWidget {
         width: 50,
         height: 50,
         fit: BoxFit.cover,
-        placeholder: (context, url) => CircularProgressIndicator(),
-        errorWidget: (context, url, error) => Icon(Icons.error),
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
       title: Text(title),
       subtitle: Text('Quantity: $quantity'),
       trailing: IconButton(
-        icon: Icon(Icons.delete),
+        icon: const Icon(Icons.delete),
         onPressed: onDelete,
       ),
     );

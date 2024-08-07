@@ -9,7 +9,7 @@ class ProductCartService {
   ProductCartService(this._dio);
   Future<void> addToCart(int productId, int quantity) async {
     try {
-      print("ProductId:" + productId.toString());
+      print("ProductId:$productId");
       final box = await Hive.openBox<LoginResModel>('loginBox');
       final loginResModel = box.get('tokens');
       final response =

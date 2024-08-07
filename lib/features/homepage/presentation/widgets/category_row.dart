@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 
 class CategoryRow extends StatelessWidget {
+  const CategoryRow({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         CategoryItem(title: 'Women', icon: Icons.woman),
@@ -20,7 +22,7 @@ class CategoryItem extends StatelessWidget {
   final String title;
   final IconData icon;
 
-  const CategoryItem({required this.title, required this.icon});
+  const CategoryItem({super.key, required this.title, required this.icon});
 
   @override
   Widget build(BuildContext context) {
